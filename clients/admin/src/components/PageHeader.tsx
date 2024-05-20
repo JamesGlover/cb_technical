@@ -1,5 +1,5 @@
 
-function Subtitle({content}: { content: string | null}) {
+function Subtitle({content}: { content?: string}) {
   if (content) {
     return <small>{content}</small>
   } else {
@@ -7,7 +7,7 @@ function Subtitle({content}: { content: string | null}) {
   }
 }
 
-function PageHeader({ title, subtitle }: {title: string, subtitle: string | null}) {
+function PageHeader({ title, subtitle }: {title: string, subtitle?: string | null}) {
   
   return (
     <header className="m-3 text-lg w-fit border-b-2 padding-2">
