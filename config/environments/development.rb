@@ -45,10 +45,12 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  cors_uris = ENV.fetch("FRONTEND_URI", "localhost:5173,127.0.0.1:5173").split(",")
+
   # Permissive CORS configuration in development mode
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins "localhost:5173", "127.0.0.1:5173"
+      origins(*cors_uris)
       resource "*", headers: :any, methods: [ :get, :post, :put, :patch, :options ]
     end
   end

@@ -23,6 +23,19 @@ Things you may want to cover:
 
 * ...
 
+## Configuration
+
+By default the back-end assumes that it will be receiving connections from
+localhost:5173. To add other URIs to the CORS set the FRONTEND_URI environmental
+variable.
+
+No CORS configuration has been set-up for other environments.
+
+```sh
+# Example for running on a different port
+export FRONTEND_URI="localhost:6002,127.0.0.1:6002"
+``
+
 ## Scope limitations
 
 This section lists some of the decisions made to limit scope for the sake of time.
