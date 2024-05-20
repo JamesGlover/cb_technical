@@ -7,3 +7,28 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+GENDERS = [
+  'Female',
+  'Male',
+  'Other',
+  'Prefer not to say'
+]
+
+TITLES = [
+  'Mr',
+  'Mrs',
+  'Miss',
+  'Ms',
+  'Dr',
+  'Prof',
+  'Rev'
+]
+
+ApplicationRecord.transaction do
+  missing_genders = GENDERS - Gender.pluck(:name)
+  missing_titles = TITLES - Title.pluck(:name)
+
+  Gender.insert_all(missing_genders.map { |name| { name: } })
+  Title.insert_all(missing_titles.map { |name| { name: } })
+end
