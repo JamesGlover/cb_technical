@@ -1,0 +1,14 @@
+# Lefthook manages git hooks. It provides great support for running
+# validations in parallel.
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+pre-commit:
+  parallel: true
+  commands:
+    rubocop:
+      tags: backend style
+      glob: "*.rb"
+      run: bundle exec rubocop --force-exclusion {changed_files}
+    rspec:
+      run: bundle exec rspec
