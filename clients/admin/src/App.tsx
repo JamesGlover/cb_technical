@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
+import { router, RouterProvider } from "./router"
+
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 
-function Page() {
-  return <div></div>
-}
 
 function App() {
 
@@ -13,9 +12,9 @@ function App() {
   return (
     <>
       <Header></Header>
-      <div className="">
+      <div className="grid grid-cols-6">
         <Sidebar></Sidebar>
-        <Page></Page>
+        <RouterProvider router={router} />
       </div>
     </>
   )
