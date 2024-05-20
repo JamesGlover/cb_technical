@@ -7,24 +7,24 @@ RSpec.describe TitlesController, type: :routing do
     end
 
     it "routes to #show" do
-      expect(get: "/titles/1").to route_to("titles#show", id: "1")
+      expect(get: "/titles/1").not_to be_routable
     end
 
 
     it "routes to #create" do
-      expect(post: "/titles").to route_to("titles#create")
+      expect(post: "/titles").not_to be_routable
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/titles/1").to route_to("titles#update", id: "1")
+      expect(put: "/titles/1").not_to be_routable
     end
 
     it "routes to #update via PATCH" do
-      expect(patch: "/titles/1").to route_to("titles#update", id: "1")
+      expect(patch: "/titles/1").not_to be_routable
     end
 
     it "routes to #destroy" do
-      expect(delete: "/titles/1").to route_to("titles#destroy", id: "1")
+      expect(delete: "/titles/1").not_to be_routable
     end
   end
 end
