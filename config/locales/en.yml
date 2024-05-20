@@ -29,3 +29,11 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    errors:
+      models:
+        patient:
+          attributes:
+            date_of_birth:
+              inclusion: can't be in the future

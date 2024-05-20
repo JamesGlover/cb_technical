@@ -10,9 +10,10 @@ FactoryBot.define do
   factory :patient do
     first_name { 'Sam' }
     last_name { 'Smith' }
+    date_of_birth { 20.years.ago }
 
     sequence(:email) { |i| "example_#{i}@example.com" }
-    sequence(:phone) { |i| "01#{i}".ljust(11) }
+    sequence(:phone) { |i| "01#{i}".ljust(11, "0") }
 
     gender
     title
