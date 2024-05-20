@@ -46,6 +46,18 @@ class PatientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def patient_params
-      params.require(:patient).permit(:first_name, :last_name, :email, :phone, :date_of_birth)
+      params.require(:patient)
+            .permit(:first_name, :last_name, :email, :phone, :date_of_birth)
+            .merge(supporting_resources)
+    end
+
+    # We hide the implementation of gender/title from the API, and allow the provision
+    # of strings
+    def supporting_resources
+      patient = params.require(:patient)
+      {
+        title: Title.find_by(name: patient[:title]),
+        gender: Gender.find_by(name: patient[:gender])
+    }.select { |k, v| patient.include?(k) }
     end
 end

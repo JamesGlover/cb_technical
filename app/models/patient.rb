@@ -1,6 +1,6 @@
 class Patient < ApplicationRecord
-  belongs_to :gender
-  belongs_to :title
+  belongs_to :gender, class_name: "Gender"
+  belongs_to :title, class_name: "Title"
 
   # Length limits to prevent malicious registration of incredibly long names.
   validates :first_name, presence: true, length: { maximum: 100 }

@@ -45,3 +45,17 @@ this out of scope.
 We'll be hiding implementation details from the API. This means each attempt to set
 gender or title will hit the database. If we were to support bulk inserts, or expecting
 to scale significantly, then some performance optimizations would be required.
+
+### Patient deletion
+
+Currently we just use the standard Rails destroy function. In practice patient removal
+would probably be tied in to a complete 'off-boarding' process, ensuring transfer of
+medical records, and removal of any associated data as required by GDPR and other
+data-retention practices.
+
+### API choices
+
+I've avoided adopting a JSON standard such as [json:api](https://jsonapi.org/) in order
+to keep things simple. Json:api does provide some really nice features, like sparse
+fieldsets and eager loading, which provide a GraphQL like way of loading related
+data-sets.
