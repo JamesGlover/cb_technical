@@ -30,6 +30,11 @@ RSpec.describe "/patients", type: :request do
       json = JSON.parse(response.body)
       expect(json.length).to eq(3)
     end
+
+    it "inlines gender and title information" do
+      json = JSON.parse(response.body)
+      expect(json).to all include('gender', 'title')
+    end
   end
 
   describe "GET /show" do
@@ -53,6 +58,13 @@ RSpec.describe "/patients", type: :request do
              params: { patient: valid_attributes }, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
+      end
+
+      it "renders a JSON response including the passed content" do
+        post patients_url,
+             params: { patient: valid_attributes }, as: :json
+        json = JSON.parse(response.body)
+        expect(json).to include(valid_attributes.stringify_keys)
       end
     end
 

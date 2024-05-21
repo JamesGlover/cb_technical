@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
 
   # GET /patients
   def index
-    @patients = Patient.all
+    @patients = Patient.include_records_for_inlining.all
 
     render json: @patients
   end
