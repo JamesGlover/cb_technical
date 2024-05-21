@@ -19,6 +19,7 @@ function patientRows(patients: Array<Patient>) {
 }
 
 function PatientsTable({patients} : { patients: Array<Patient>}) {
+
   return (
     <table className="table-auto w-full border-collapse">
       <thead>

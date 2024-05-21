@@ -3,10 +3,17 @@ import ErrorMessage from "@components/ErrorMessage"
 
 import { usePatientQuery, useUpdatePatientMutation } from "@/queries"
 import { useParams, useNavigate } from "@/router" 
-import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { Patient } from "@/types";
+import { useState } from 'react';
+import { Patient, PatientErrors, PatientKeys, PartialPatient } from "@/types";
 
-function FormFields({label, def, attribute, onChange, type="text", errors}) {
+function FormFields({label, def, attribute, onChange, type="text", errors}: {
+  label:string, 
+  def: Patient,
+  attribute: PatientKeys, 
+  onChange: (patient: PartialPatient)=>void ,
+  type?: string, 
+  errors: PatientErrors
+}) {
   const error_message = errors[attribute]
 
   const color = error_message ? 'red-500' : 'accent-300'
@@ -25,7 +32,7 @@ function FormFields({label, def, attribute, onChange, type="text", errors}) {
     </>)
 }
 
-function PatientForm({def, onChange, formErrors}: {def: Patient, onChange: (attribute: string, value: any) => void, formErrors: { } }) {
+function PatientForm({def, onChange, formErrors}: {def: Patient, onChange: (patient: PartialPatient) => void, formErrors: { } }) {
 
   return (
     <form>
@@ -60,13 +67,13 @@ function PatientEdit() {
 
   if (!patient) { return <PageHeader title="Patient" subtitle="Loading..."></PageHeader> }
 
-  const onChange = (new_state: { }) => setPatient({...patient, ...new_state})
+  const onChange = (new_state: PartialPatient) => setPatient({...patient, ...new_state})
 
   return(
     <>
       <PageHeader title="Patient" subtitle="Edit"></PageHeader>
       <ErrorMessage message={errors.message}></ErrorMessage>
-      <PatientForm def={patient} patient={patientState} onChange={onChange} formErrors={errors.details}></PatientForm>
+      <PatientForm def={patient} onChange={onChange} formErrors={errors.details}></PatientForm>
 
       <button 
         onClick={(e)=>{ updatePatient.mutate({...patientState, id: patient_id})}}
