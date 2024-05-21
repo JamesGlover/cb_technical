@@ -67,7 +67,7 @@ function PatientEdit() {
 
   if (!patient) { return <PageHeader title="Patient" subtitle="Loading..."></PageHeader> }
 
-  const onChange = (new_state: PartialPatient) => setPatient({...patient, ...new_state})
+  const onChange = (new_state: PartialPatient) => setPatient({...patientState, ...new_state})
 
   return(
     <>
