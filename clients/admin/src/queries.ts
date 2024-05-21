@@ -31,12 +31,16 @@ const useDeletePatientMutation = ({onSuccess = () => {}}={}) => {
   return useMutation({mutationFn, onSuccess})
 }
 
-const useUpdatePatientMutation = ({onSuccess = () => {}}={}) => {
+const useUpdatePatientMutation = ({onSuccess = () => {}, onError = ()=>{}}={}) => {
   const mutationFn = async (patient: Patient) =>  {
     const body = await JSON.stringify({patient})
-    await window.fetch(new URL(`patients/${patient.id}`, BASE_URL), {method: 'PUT', body, headers})
+    const result = await window.fetch(new URL(`patients/${patient.id}`, BASE_URL), {method: 'PUT', body, headers})
+    if (result.ok) { return result }
+    // We're not okay
+    const details = await result.json()
+    throw({message: "Patient details could not be saved", details})
   }
-  return useMutation({mutationFn, onSuccess})
+  return useMutation({mutationFn, onSuccess, onError})
 }
 
 export {

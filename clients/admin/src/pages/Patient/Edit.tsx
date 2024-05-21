@@ -1,44 +1,43 @@
 import PageHeader from "@components/PageHeader"
+import ErrorMessage from "@components/ErrorMessage"
 
-import { usePatientQuery, UseQueryResult, useUpdatePatientMutation } from "@/queries"
+import { usePatientQuery, useUpdatePatientMutation } from "@/queries"
 import { useParams, useNavigate } from "@/router" 
-import { Link } from "react-router-dom"
-import { useState, ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { Patient } from "@/types";
 
-const defaultPatient = {
-  title: undefined,
-  first_name: undefined,
-  last_name: undefined,
-  date_of_birth: undefined,
-  gender: undefined,
-  email: undefined,
-  phone: undefined
+function FormFields({label, def, attribute, onChange, type="text", errors}) {
+  const error_message = errors[attribute]
+
+  const color = error_message ? 'red-500' : 'accent-300'
+
+  return (<>
+    <label htmlFor="title">{label}</label>
+    <div>
+      <input id="title" 
+           defaultValue={def[attribute]} 
+           onChange={(e)=> onChange({[attribute]: e.target?.value})} 
+           type={type} 
+           className={`border-2 border-${color} m-2 p-2 rounded w-full`}
+      ></input>
+      <span className="p-2 m-2 text-red-500">{ error_message }</span>
+    </div>
+    </>)
 }
 
-
-function PatientForm({def, patient, setPatient}: {def: Patient, patient: Patient, setPatient: Dispatch<SetStateAction<Patient>>}) {
-
-  const bindTo = (attribute: string) => (e: ChangeEvent<HTMLInputElement>) => setPatient({...patient, [attribute]: e.target?.value})
+function PatientForm({def, onChange, formErrors}: {def: Patient, onChange: (attribute: string, value: any) => void, formErrors: { } }) {
 
   return (
     <form>
-      <dl className="grid grid-cols-[20%,80%]">
-        <dt><label htmlFor="title">Title</label></dt>
-        <dd><input id="title" defaultValue={def.title} onChange={bindTo('title')}></input></dd>
-        <dt><label htmlFor="first_name">First Name</label></dt>
-        <dd><input id="first_name" defaultValue={def.first_name} onChange={bindTo('first_name')}></input></dd>
-        <dt><label htmlFor="last_name">Last Name</label></dt>
-        <dd><input id="last_name" defaultValue={def.last_name} onChange={bindTo('last_name')}></input></dd>
-        <dt><label htmlFor="date_of_birth">Date of Birth</label></dt>
-        <dd><input id="date_of_birth" defaultValue={def.date_of_birth} onChange={bindTo('date_of_birth')}></input></dd>
-        <dt><label htmlFor="gender">Gender</label></dt>
-        <dd><input id="gender" defaultValue={def.gender} onChange={bindTo('gender')}></input></dd>
-        <dt><label htmlFor="email">Email</label></dt>
-        <dd><input id="email" defaultValue={def.email} type="email" onChange={bindTo('email')}></input></dd>
-        <dt><label htmlFor="phone">Phone</label></dt>
-        <dd><input id="phone" defaultValue={def.phone} type="tel" onChange={bindTo('phone')}></input></dd>
-      </dl>
+      <div className="grid grid-cols-[10%,70%]">
+        <FormFields label="Title" def={def} attribute="title" onChange={onChange} errors={formErrors}/>
+        <FormFields label="First Name" def={def} attribute="first_name" onChange={onChange} errors={formErrors}/>
+        <FormFields label="Last Name" def={def} attribute="last_name" onChange={onChange} errors={formErrors}/>
+        <FormFields label="Date of Birth" def={def} attribute="date_of_birth" onChange={onChange} errors={formErrors}/>
+        <FormFields label="Gender" def={def} attribute="gender" onChange={onChange} errors={formErrors}/>
+        <FormFields label="Email" def={def} attribute="email" onChange={onChange} type="email" errors={formErrors}/>
+        <FormFields label="Phone" def={def} attribute="phone" onChange={onChange} type="tel" errors={formErrors}/>
+      </div>
     </form>
   )
 }
@@ -56,14 +55,18 @@ function PatientEdit() {
 
   const patient = result.data || {}
   const [patientState, setPatient] = useState(patient)
-  const updatePatient = useUpdatePatientMutation({onSuccess: () => navigate(show_page)})
+  const [errors, setErrors] = useState({message: null, details: {}})
+  const updatePatient = useUpdatePatientMutation({onSuccess: () => navigate(show_page), onError: setErrors })
 
   if (!patient) { return <PageHeader title="Patient" subtitle="Loading..."></PageHeader> }
+
+  const onChange = (new_state: { }) => setPatient({...patient, ...new_state})
 
   return(
     <>
       <PageHeader title="Patient" subtitle="Edit"></PageHeader>
-      <PatientForm def={patient} patient={patientState} setPatient={setPatient}></PatientForm>
+      <ErrorMessage message={errors.message}></ErrorMessage>
+      <PatientForm def={patient} patient={patientState} onChange={onChange} formErrors={errors.details}></PatientForm>
 
       <button 
         onClick={(e)=>{ updatePatient.mutate({...patientState, id: patient_id})}}
