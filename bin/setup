@@ -30,4 +30,11 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! "bin/rails restart"
+
+  puts "\n== Setting up node application"
+  FileUtils.chdir "clients/admin" do
+    system! "npm install"
+  end
+
+  puts "Run 'bundle exec rake db:create_patients' to generate dummy patient data"
 end
