@@ -58,6 +58,12 @@ This section lists some of the decisions made to limit scope for the sake of tim
 
 Still missing is the functionality to create new users, and to search.
 
+### Front end fields
+
+Ideally DOB would be a day, month, year dropdown. (Date input fields are terrible for
+birthdays on many platforms).
+The gender and title fields would be select dropdowns.
+
 ### Email/Phone validation
 
 In a real application email and phone can only be properly validated by either making an
