@@ -10,7 +10,7 @@ function Subtitle({content}: { content?: string}) {
 function PageHeader({ title, subtitle }: {title: string, subtitle?: string}) {
   
   return (
-    <header className="text-lg w-fit border-b-2 padding-3 my-3">
+    <header className="text-lg w-fit border-b-2 padding-3 my-3 border-accent-300 text-accent-900">
       <h2>{ title } <Subtitle content={subtitle}></Subtitle></h2>
     </header>
   )

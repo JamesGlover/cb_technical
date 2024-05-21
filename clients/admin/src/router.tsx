@@ -1,5 +1,5 @@
 import _ from "react"
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, redirect, useNavigate, useParams, NavLink } from "react-router-dom"
 
 import Patient from "./pages/Patient"
 
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
 
 
 export {
+  NavLink,
   router,
-  RouterProvider
+  RouterProvider,
+  redirect,
+  useNavigate,
+  useParams
 }

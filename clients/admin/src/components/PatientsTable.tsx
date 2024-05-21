@@ -1,14 +1,12 @@
 import { Patient } from '@/types'
-
-function DateOfBirth({date} : {date: string}) {
-  Date.parse(date)
-  const human_readable = new Date(date).toLocaleDateString()
-  return <time dateTime={date}>{human_readable}</time>
-}
+import { useNavigate } from '@/router'
+import DateOfBirth from "@/components/DateOfBirth"
 
 function patientRow(patient: Patient) {
+  const navigate = useNavigate();
+
   return(
-    <tr key={patient.id} className="even:bg-slate-100">
+    <tr key={patient.id} className="even:bg-slate-100 hover:bg-accent-200 hover:cursor-pointer" onClick={() =>navigate(`/patients/${patient.id}`)}>
       <td>{ patient.title }</td>
       <td>{ patient.last_name }, { patient.first_name }</td>
       <td><DateOfBirth date={patient.date_of_birth} /></td>
