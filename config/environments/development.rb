@@ -51,7 +51,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins(*cors_uris)
-      resource "*", headers: :any, methods: [ :get, :post, :put, :patch, :options ]
+      resource "*", headers: :any, methods: [ :get, :post, :put, :patch, :options, :delete ]
     end
   end
 
