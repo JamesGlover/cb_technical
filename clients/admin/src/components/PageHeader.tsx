@@ -7,10 +7,10 @@ function Subtitle({content}: { content?: string}) {
   }
 }
 
-function PageHeader({ title, subtitle }: {title: string, subtitle?: string | null}) {
+function PageHeader({ title, subtitle }: {title: string, subtitle?: string}) {
   
   return (
-    <header className="m-3 text-lg w-fit border-b-2 padding-2">
+    <header className="text-lg w-fit border-b-2 padding-3 my-3">
       <h2>{ title } <Subtitle content={subtitle}></Subtitle></h2>
     </header>
   )

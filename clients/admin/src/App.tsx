@@ -16,7 +16,9 @@ function App() {
       <Header></Header>
       <div className="grid grid-cols-6">
         <Sidebar></Sidebar>
-        <RouterProvider router={router} />
+        <main className="p-3 col-span-5">
+          <RouterProvider router={router} />
+        </main>
       </div>
     </QueryClientProvider>
   )

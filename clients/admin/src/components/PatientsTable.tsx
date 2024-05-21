@@ -8,10 +8,9 @@ function DateOfBirth({date} : {date: string}) {
 
 function patientRow(patient: Patient) {
   return(
-    <tr>
+    <tr key={patient.id} className="even:bg-slate-100">
       <td>{ patient.title }</td>
-      <td>{ patient.first_name }</td>
-      <td>{ patient.last_name }</td>
+      <td>{ patient.last_name }, { patient.first_name }</td>
       <td><DateOfBirth date={patient.date_of_birth} /></td>
     </tr>
   )
@@ -23,12 +22,11 @@ function patientRows(patients: Array<Patient>) {
 
 function PatientsTable({patients} : { patients: Array<Patient>}) {
   return (
-    <table>
+    <table className="table-auto w-full border-collapse">
       <thead>
-        <tr>
+        <tr className="border-slate-800 border-b text-left">
           <th>Title</th>
-          <th>Last Name</th>
-          <th>First Name</th>
+          <th>Name</th>
           <th>Date of Birth</th>
         </tr>
       </thead>
